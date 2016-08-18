@@ -75,10 +75,11 @@ public final class AccionesVentana {
     }
 
     public AccionesVentana(JFrame ventana, String Titulo) {
-        URL url = getClass().getResource("/com/caguaicorp/e/parser/img/favico.png");
-        Toolkit kit = Toolkit.getDefaultToolkit();
-        Image img = kit.createImage(url);
-        ventana.setIconImage(img);
+        //System.out.println(getClass().getResource("/"));
+        //URL url = getClass().getResource("/com/caguaicorp/e/parser/img/favico.png");
+        //Toolkit kit = Toolkit.getDefaultToolkit();
+        //Image img = kit.createImage(url);
+        //ventana.setIconImage(img);
 
         CentrarVentana(ventana);
         ventana.setTitle(Titulo);
