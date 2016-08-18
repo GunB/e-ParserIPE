@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
@@ -20,7 +20,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public final class ExcelReader {
 
-    private XSSFSheet xssActualSheet = null;
+    private Sheet xssActualSheet = null;
     private XSSFWorkbook xssActualBook = null;
 
     String strPath;
@@ -69,10 +69,10 @@ public final class ExcelReader {
      */
     public ArrayList<String> getArrSheetNames() {
         arrSheetNames = new ArrayList<>();
-        Iterator<XSSFSheet> iteSheet = xssActualBook.iterator();
+        Iterator<Sheet> iteSheet = xssActualBook.iterator();
 
         while (iteSheet.hasNext()) {
-            XSSFSheet tempSheet = iteSheet.next();
+            Sheet tempSheet = iteSheet.next();
             this.arrSheetNames.add(tempSheet.getSheetName());
             //System.out.println(tempSheet.getSheetName());
         }
@@ -84,7 +84,7 @@ public final class ExcelReader {
      *
      * @return Obtiene una hoja en formato Apache poi
      */
-    public XSSFSheet getXssActualSheet() {
+    public Sheet getXssActualSheet() {
         return xssActualSheet;
     }
 
@@ -96,7 +96,7 @@ public final class ExcelReader {
      * clave y el valor no son vacios, se reconocen como una nueva entrada
      * correcta para el Hashmap
      */
-    public static HashMap turnSheetToObject(XSSFSheet xssSheet) {
+    public static HashMap turnSheetToObject(Sheet xssSheet) {
         HashMap<String, String> objSheet = new HashMap();
         //Iterate through each rows one by one
         Iterator<Row> rowIterator = xssSheet.iterator();
@@ -160,7 +160,7 @@ public final class ExcelReader {
      * @return Regresa una hoja en formato Apache poi y además laa signa como la
      * hoja actual a trabajar en la variable @xssActualSheet
      */
-    public XSSFSheet ReadSheetbyName(String strName) {
+    public Sheet ReadSheetbyName(String strName) {
         this.xssActualSheet = this.xssActualBook.getSheet(strName);
         return xssActualSheet;
     }
@@ -170,7 +170,7 @@ public final class ExcelReader {
      * @param intId
      * @return
      */
-    public XSSFSheet ReadSheetbyId(int intId) {
+    public Sheet ReadSheetbyId(int intId) {
         this.xssActualSheet = this.xssActualBook.getSheetAt(intId);
         return xssActualSheet;
     }
@@ -186,7 +186,7 @@ public final class ExcelReader {
             XSSFWorkbook workbook = new XSSFWorkbook(file);
 
             //Get first/desired sheet from the workbook
-            XSSFSheet sheet = workbook.getSheetAt(0);
+            Sheet sheet = workbook.getSheetAt(0);
 
             //Iterate through each rows one by one
             Iterator<Row> rowIterator = sheet.iterator();

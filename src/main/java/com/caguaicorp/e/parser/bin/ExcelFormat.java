@@ -15,7 +15,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import com.caguaicorp.e.parser.model.SharableContentObject;
 import com.caguaicorp.e.parser.model.XMLTag;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -24,6 +23,7 @@ import com.caguaicorp.e.parser.utiility.ExcelReader;
 import com.caguaicorp.e.parser.utiility.FilesUtility;
 import static com.caguaicorp.e.parser.utiility.XMLUtility.AddNodeList2Node;
 import static com.caguaicorp.e.parser.utiility.XMLUtility.ChangeNode;
+import org.apache.poi.ss.usermodel.Sheet;
 
 /**
  *
@@ -74,7 +74,7 @@ public class ExcelFormat {
 
     private void ExcelParser() {
         for (String strNameSheet : filExcel.getArrSheetNames()) {
-            XSSFSheet readedSheet = filExcel.ReadSheetbyName(strNameSheet);
+            Sheet readedSheet = filExcel.ReadSheetbyName(strNameSheet);
             //filExcel.arrSheetNames.remove(0);
             HashMap<String, String> objSheet = ExcelReader.turnSheetToObject(readedSheet);
             arrObjects.put(objSheet.get(arrNames[0][1]), objSheet);
