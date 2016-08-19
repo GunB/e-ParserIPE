@@ -42,10 +42,10 @@ public class ExcelFormat {
                 {"title", "Título"},
                 {"description", "Descripción"},
                 {"keyword", "Palabras Claves"},
-                {"learningGoal", "Objetivo de Aprendizaje\n" + " (Learning Goal)"},
-                {"triggerQuestion", "Pregunta Detonante\n" + "(Trigger Question)"},
-                {"pedagogicalAspect", "Aspectos Pedagógicos \n" + "(Pedagogical Aspects)"},
-                {"recommendedUse", "Sugerencia de Uso\n" + "(Recommended Use)"},};
+                {"learningGoal", "Objetivo de Aprendizaje\n" + "\n (Learning Goal)"},
+                {"triggerQuestion", "Pregunta Detonante\n" + "\n(Trigger Question)"},
+                {"pedagogicalAspect", "Aspectos Pedagógicos \n" + "\n(Pedagogical Aspects)"},
+                {"recommendedUse", "Sugerencia de Uso\n" + "\n(Recommended Use)"},};
 
     public String getName() {
         return filExcel.getStrName();
@@ -72,31 +72,31 @@ public class ExcelFormat {
             try (PrintWriter out = new PrintWriter(strBase)) {
 
                 String text = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><lom xmlns=\"http://ltsc.ieee.org/xsd/LOM\">"
-                        + "<general>"
-                        + "<identifier>"
-                        + " <catalog catName=\"\" catSource=\"\"/>"
-                        + "</identifier>"
-                        + "<title lang=\"\" subtitle=\"\"></title>"
-                        + "<description lang=\"es\"/>"
-                        + "<keyword lang=\"\"/>"
-                        + "<structure schema=\"CEM\"/>"
-                        + "<aggregationLevel schema=\"CEM\"/>"
-                        + "</general>"
-                        + "<lifeCycle/>"
-                        + "<metaMetadata/>"
-                        + "<technical/>"
-                        + "<educational>"
-                        + " <description>"
-                        + "     <recommendedUse lang=\"es\"/>"
-                        + "     <triggerQuestion lang=\"es\"/>"
-                        + "     <pedagogicalAspect lang=\"es\"/>"
-                        + "     <learningGoal lang=\"es\"/>"
-                        + " </description>"
-                        + "</educational>"
-                        + "<rights/>"
-                        + "<classification>"
-                        + "</classification>"
-                        + "</lom>";
+                        + "\n<general>"
+                        + "\n<identifier>"
+                        + "\n<catalog catName=\"\" catSource=\"\"/>"
+                        + "\n</identifier>"
+                        + "\n<title lang=\"\" subtitle=\"\"></title>"
+                        + "\n<description lang=\"es\"/>"
+                        + "\n<keyword lang=\"\"/>"
+                        + "\n<structure schema=\"CEM\"/>"
+                        + "\n<aggregationLevel schema=\"CEM\"/>"
+                        + "\n</general>"
+                        + "\n<lifeCycle/>"
+                        + "\n<metaMetadata/>"
+                        + "\n<technical/>"
+                        + "\n<educational>"
+                        + "\n<description>"
+                        + "\n<recommendedUse lang=\"es\"/>"
+                        + "\n<triggerQuestion lang=\"es\"/>"
+                        + "\n<pedagogicalAspect lang=\"es\"/>"
+                        + "\n<learningGoal lang=\"es\"/>"
+                        + "\n</description>"
+                        + "\n</educational>"
+                        + "\n<rights/>"
+                        + "\n<classification>"
+                        + "\n</classification>"
+                        + "\n</lom>";
                 out.println(text);
             }
         }
