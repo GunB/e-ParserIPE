@@ -23,6 +23,7 @@ import com.caguaicorp.e.parser.utiility.ExcelReader;
 import com.caguaicorp.e.parser.utiility.FilesUtility;
 import static com.caguaicorp.e.parser.utiility.XMLUtility.AddNodeList2Node;
 import static com.caguaicorp.e.parser.utiility.XMLUtility.ChangeNode;
+import java.io.PrintWriter;
 import org.apache.poi.ss.usermodel.Sheet;
 
 /**
@@ -66,7 +67,39 @@ public class ExcelFormat {
     private void XmlFormatBase(String strBase) throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        File f = new File(strBase);
+        if (!f.exists()) {
+            try (PrintWriter out = new PrintWriter(strBase)) {
 
+                String text = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><lom xmlns=\"http://ltsc.ieee.org/xsd/LOM\">"
+                        + "<general>"
+                        + "<identifier>"
+                        + " <catalog catName=\"\" catSource=\"\"/>"
+                        + "</identifier>"
+                        + "<title lang=\"\" subtitle=\"\"></title>"
+                        + "<description lang=\"es\"/>"
+                        + "<keyword lang=\"\"/>"
+                        + "<structure schema=\"CEM\"/>"
+                        + "<aggregationLevel schema=\"CEM\"/>"
+                        + "</general>"
+                        + "<lifeCycle/>"
+                        + "<metaMetadata/>"
+                        + "<technical/>"
+                        + "<educational>"
+                        + " <description>"
+                        + "     <recommendedUse lang=\"es\"/>"
+                        + "     <triggerQuestion lang=\"es\"/>"
+                        + "     <pedagogicalAspect lang=\"es\"/>"
+                        + "     <learningGoal lang=\"es\"/>"
+                        + " </description>"
+                        + "</educational>"
+                        + "<rights/>"
+                        + "<classification>"
+                        + "</classification>"
+                        + "</lom>";
+                out.println(text);
+            }
+        }
         //FileInputStream in = new FileInputStream(new File(strBase));
         //doc = dBuilder.parse(in, "UTF-8");
         doc = dBuilder.parse(strBase);
