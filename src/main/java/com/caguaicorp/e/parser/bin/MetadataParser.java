@@ -436,7 +436,7 @@ public class MetadataParser implements Runnable {
     public void run() {
         if (this.isCopy) {
             File CopyFolder = FilesUtility.CopyFolder(this.strPath);
-            Log("Copiando archivos...");
+            //Log("Copiando archivos...");
             this.strPath = CopyFolder.getPath();
             String[] strparams = {this.strPath};
 
