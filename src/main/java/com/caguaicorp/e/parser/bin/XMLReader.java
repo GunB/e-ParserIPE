@@ -14,7 +14,6 @@ import javax.xml.transform.stream.StreamResult;
 import com.caguaicorp.e.parser.model.ElementHandler;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-import com.caguaicorp.e.parser.utiility.XMLUtility;
 
 public class XMLReader
         implements ElementHandler {
@@ -40,6 +39,7 @@ public class XMLReader
         System.out.println("File: " + this.fileData.getName());
     }
 
+    @Override
     public Document Read() throws IOException, SAXException, ParserConfigurationException {
         File fXmlFile = this.fileData;
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -47,6 +47,7 @@ public class XMLReader
         return dBuilder.parse(fXmlFile);
     }
 
+    @Override
     public void WriteFinish(Document doc) throws IOException, TransformerException {
         System.out.println("Saving [File]: " + this.fileData.getPath());
 

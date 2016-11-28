@@ -70,6 +70,12 @@
       <artifactId>log4j</artifactId>
       <version>${log4j.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.zeroturnaround</groupId>
+      <artifactId>zt-zip</artifactId>
+      <version>1.10</version>
+      <type>jar</type>
+    </dependency>
   </dependencies>
   
   <build>

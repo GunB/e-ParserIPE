@@ -15,6 +15,12 @@ import com.caguaicorp.e.parser.model.ElementHandler;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import com.caguaicorp.e.parser.utiility.XMLUtility;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.ZipInputStream;
+import org.zeroturnaround.zip.ZipEntrySource;
+import org.zeroturnaround.zip.ZipUtil;
 
 public class ZipReader
         implements ElementHandler {
@@ -25,11 +31,13 @@ public class ZipReader
     String strFile2Change = "metadata.xml";
 
     ZipFile zipFile = null;
+    File file = null;
 
     public ZipReader(String strPath, String strName) throws IOException {
         this.strPath = strPath;
         this.strName = strName;
         String strFile = strPath.concat(File.separator).concat(strName);
+        this.file = new File(strFile);
         this.zipFile = new ZipFile(strFile);
     }
 
@@ -37,6 +45,7 @@ public class ZipReader
         this.strPath = fileData.getParent();
         this.strName = fileData.getName();
         this.zipFile = new ZipFile(fileData);
+        this.file = fileData;
         System.out.println("Path: " + this.strPath);
         System.out.println("Name: " + this.strName);
         System.out.println("File: " + this.zipFile.getName());
@@ -53,6 +62,11 @@ public class ZipReader
             if (strName.equalsIgnoreCase(this.strFile2Change)) {
                 doc = XMLUtility.newDocumentFromInputStream(this.zipFile.getInputStream(entryIn));
             }
+        }
+
+        if (doc == null) {
+            ZipUtil.addEntry(this.file, strFile2Change, new File(strFile2Change), this.file);
+            doc = Read();
         }
 
         return doc;
