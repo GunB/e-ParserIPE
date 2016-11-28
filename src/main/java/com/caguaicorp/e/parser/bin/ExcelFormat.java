@@ -53,56 +53,8 @@ public class ExcelFormat {
 
     public ExcelFormat(ExcelReader filExcel) throws ParserConfigurationException, SAXException, IOException {
         this.filExcel = filExcel;
-        String xmlUrl = FilesUtility.strRoot.concat(File.separator).concat("metadata.xml");
-        XmlFormatBase(xmlUrl);
+        doc = FilesUtility.XmlFormatBase();
         ExcelParser();
-    }
-
-    public ExcelFormat(ExcelReader filExcel, String strUrlXMLBase) throws ParserConfigurationException, SAXException, IOException {
-        this.filExcel = filExcel;
-        XmlFormatBase(strUrlXMLBase);
-        ExcelParser();
-    }
-
-    private void XmlFormatBase(String strBase) throws ParserConfigurationException, SAXException, IOException {
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        File f = new File(strBase);
-        if (!f.exists()) {
-            try (PrintWriter out = new PrintWriter(strBase)) {
-
-                String text = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><lom xmlns=\"http://ltsc.ieee.org/xsd/LOM\">"
-                        + "\n<general>"
-                        + "\n<identifier>"
-                        + "\n<catalog catName=\"\" catSource=\"\"/>"
-                        + "\n</identifier>"
-                        + "\n<title lang=\"\" subtitle=\"\"></title>"
-                        + "\n<description lang=\"es\"/>"
-                        + "\n<keyword lang=\"\"/>"
-                        + "\n<structure schema=\"CEM\"/>"
-                        + "\n<aggregationLevel schema=\"CEM\"/>"
-                        + "\n</general>"
-                        + "\n<lifeCycle/>"
-                        + "\n<metaMetadata/>"
-                        + "\n<technical/>"
-                        + "\n<educational>"
-                        + "\n<description>"
-                        + "\n<recommendedUse lang=\"es\"/>"
-                        + "\n<triggerQuestion lang=\"es\"/>"
-                        + "\n<pedagogicalAspect lang=\"es\"/>"
-                        + "\n<learningGoal lang=\"es\"/>"
-                        + "\n</description>"
-                        + "\n</educational>"
-                        + "\n<rights/>"
-                        + "\n<classification>"
-                        + "\n</classification>"
-                        + "\n</lom>";
-                out.println(text);
-            }
-        }
-        //FileInputStream in = new FileInputStream(new File(strBase));
-        //doc = dBuilder.parse(in, "UTF-8");
-        doc = dBuilder.parse(strBase);
     }
 
     private void ExcelParser() {

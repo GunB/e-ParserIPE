@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.FileStore;
@@ -19,12 +20,60 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 public class FilesUtility {
 
-    public static String strRoot = System.getProperty("user.dir");
+    public static String strRoot = System.getProperty("user.home");
     private static long unixTime = System.currentTimeMillis() / 1000L;
     private static String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(Calendar.getInstance().getTime());
+    public static String strFile2Change = "metadata.xml";
+
+    public static Document XmlFormatBase() throws ParserConfigurationException, SAXException, IOException {
+        String strBase = strRoot + File.separator + strFile2Change;
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        File f = new File(strBase);
+        if (!f.exists()) {
+            try (PrintWriter out = new PrintWriter(strBase)) {
+
+                String text = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><lom xmlns=\"http://ltsc.ieee.org/xsd/LOM\">"
+                        + "\n<general>"
+                        + "\n<identifier>"
+                        + "\n<catalog catName=\"\" catSource=\"\"/>"
+                        + "\n</identifier>"
+                        + "\n<title lang=\"\" subtitle=\"\"></title>"
+                        + "\n<description lang=\"es\"/>"
+                        + "\n<keyword lang=\"\"/>"
+                        + "\n<structure schema=\"CEM\"/>"
+                        + "\n<aggregationLevel schema=\"CEM\"/>"
+                        + "\n</general>"
+                        + "\n<lifeCycle/>"
+                        + "\n<metaMetadata/>"
+                        + "\n<technical/>"
+                        + "\n<educational>"
+                        + "\n<description>"
+                        + "\n<recommendedUse lang=\"es\"/>"
+                        + "\n<triggerQuestion lang=\"es\"/>"
+                        + "\n<pedagogicalAspect lang=\"es\"/>"
+                        + "\n<learningGoal lang=\"es\"/>"
+                        + "\n</description>"
+                        + "\n</educational>"
+                        + "\n<rights/>"
+                        + "\n<classification>"
+                        + "\n</classification>"
+                        + "\n</lom>";
+                out.println(text);
+            }
+        }
+        //FileInputStream in = new FileInputStream(new File(strBase));
+        //doc = dBuilder.parse(in, "UTF-8");
+        return (Document) dBuilder.parse(strBase).cloneNode(true);
+    }
 
     public static void copyFolder(File src, File dest)
             throws IOException {

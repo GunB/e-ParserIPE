@@ -12,15 +12,12 @@ import java.util.zip.ZipOutputStream;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import com.caguaicorp.e.parser.model.ElementHandler;
+import com.caguaicorp.e.parser.utiility.FilesUtility;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import com.caguaicorp.e.parser.utiility.XMLUtility;
-import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.zip.ZipInputStream;
-import org.zeroturnaround.zip.ZipEntrySource;
-import org.zeroturnaround.zip.ZipUtil;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ZipReader
         implements ElementHandler {
@@ -65,7 +62,12 @@ public class ZipReader
         }
 
         if (doc == null) {
-            ZipUtil.addEntry(this.file, strFile2Change, new File(strFile2Change), this.file);
+            try {
+                WriteFinish(FilesUtility.XmlFormatBase());
+                this.zipFile = new ZipFile(this.file);
+            } catch (TransformerException ex) {
+                Logger.getLogger(ZipReader.class.getName()).log(Level.SEVERE, null, ex);
+            }
             doc = Read();
         }
 
@@ -83,6 +85,8 @@ public class ZipReader
         ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(newFile), StandardCharsets.UTF_8);
         System.out.println("Saving [File]: " + strNewFile);
 
+        Boolean isFounded = false;
+
         //XMLUtility.printDocument(doc, System.out);
         for (Enumeration e = this.zipFile.entries(); e.hasMoreElements();) {
             ZipEntry entryIn = new ZipEntry((ZipEntry) e.nextElement());
@@ -99,10 +103,19 @@ public class ZipReader
                     zos.write(buf, 0, len);
                 }
             } else {
+                isFounded = true;
                 ZipEntry destEntry = new ZipEntry(this.strFile2Change);
                 zos.putNextEntry(destEntry);
                 XMLUtility.printDocument(doc, zos);
             }
+
+            zos.closeEntry();
+        }
+
+        if (!isFounded) {
+            ZipEntry destEntry = new ZipEntry(this.strFile2Change);
+            zos.putNextEntry(destEntry);
+            XMLUtility.printDocument(doc, zos);
             zos.closeEntry();
         }
         zos.close();
