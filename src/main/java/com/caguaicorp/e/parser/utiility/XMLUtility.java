@@ -22,7 +22,10 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import com.caguaicorp.e.parser.model.XMLTag;
+import java.util.HashMap;
+import java.util.Map;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -66,7 +69,7 @@ public class XMLUtility {
         return listNode;
     }
 
-    public static NodeList ChangeNode(NodeList listNode, ArrayList<String> arrStrCompare, String strNewValue) {
+    public static NodeList ChangeNode(NodeList listNode, ArrayList<String> arrStrCompare, String strNewValue, HashMap<String, String> mapAttributes) {
         ArrayList<String> arrTempList = arrStrCompare;
         Iterator<String> iterator = arrTempList.iterator();
 
@@ -79,17 +82,30 @@ public class XMLUtility {
 
                 if (strCompare.equals(node.getNodeName())) {
                     if (iterator.hasNext()) {
-                        node = ChangeNode(node.getChildNodes(), arrTempList, strNewValue).item(0);
+                        node = ChangeNode(node.getChildNodes(), arrTempList, strNewValue, mapAttributes).item(0);
                         break;
                     }
-                    node.setTextContent(strNewValue);
-
+                    ChangeData(node, strNewValue, mapAttributes);
                     break;
                 }
             }
         }
-
         return listNode;
+    }
+
+    private static void ChangeData(Node node, String strNewValue, HashMap<String, String> mapAttributes) {
+        if (strNewValue != null) {
+            node.setTextContent(strNewValue);
+        }
+        if (mapAttributes != null) {
+            Iterator it = mapAttributes.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+                ((Element) node).setAttribute(pair.getKey().toString(), pair.getValue().toString());
+                //System.out.println(pair.getKey() + " = " + pair.getValue());
+                it.remove(); // avoids a ConcurrentModificationException
+            }
+        }
     }
 
     public static String ReadNode(NodeList listNode, ArrayList<String> arrStrCompare) {

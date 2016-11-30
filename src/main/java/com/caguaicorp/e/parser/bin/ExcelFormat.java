@@ -5,13 +5,10 @@
  */
 package com.caguaicorp.e.parser.bin;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import com.caguaicorp.e.parser.model.SharableContentObject;
 import com.caguaicorp.e.parser.model.XMLTag;
@@ -23,7 +20,6 @@ import com.caguaicorp.e.parser.utiility.ExcelReader;
 import com.caguaicorp.e.parser.utiility.FilesUtility;
 import static com.caguaicorp.e.parser.utiility.XMLUtility.AddNodeList2Node;
 import static com.caguaicorp.e.parser.utiility.XMLUtility.ChangeNode;
-import java.io.PrintWriter;
 import org.apache.poi.ss.usermodel.Sheet;
 
 /**
@@ -76,6 +72,10 @@ public class ExcelFormat {
         NodeList list = staff.getChildNodes();
 
         HashMap<String, String> objObjeto = arrObjects.get(scoSco.getStrID());
+        HashMap<String, String> objAttributes = new HashMap<>();
+        
+        objAttributes.put("lang", scoSco.getStrID().substring(2));
+        
         ArrayList arrResp;
 
         for (String[] arrName : arrNames) {
@@ -83,39 +83,40 @@ public class ExcelFormat {
                 switch (arrName[0]) {
                     case "title":
                         arrResp = new ArrayList<>(Arrays.asList("general", "title"));
-                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]));
+                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), objAttributes);
                         scoSco.setStrNombre(objObjeto.get(arrName[1]));
                         break;
                     case "description":
                         arrResp = new ArrayList<>(Arrays.asList("general", "description"));
-                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]));
+                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), objAttributes);
                         scoSco.setStrDesc(objObjeto.get(arrName[1]));
                         break;
                     case "identifier":
                         arrResp = new ArrayList<>(Arrays.asList("general", "identifier", "catalog"));
-                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]));
+                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), null);
                         scoSco.setStrID(objObjeto.get(arrName[1]));
                         break;
                     case "keyword":
                         String[] arrKeyWords = objObjeto.get(arrName[1]).split(",");
                         arrResp = new ArrayList<>(Arrays.asList("general", "keyword"));
                         list = AddNodeList2Node(list, docu, arrResp, arrKeyWords, new XMLTag("li"));
+                        list = ChangeNode(list, arrResp, null, objAttributes);
                         break;
                     case "learningGoal":
                         arrResp = new ArrayList<>(Arrays.asList("educational", "description", "learningGoal"));
-                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]));
+                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), objAttributes);
                         break;
                     case "triggerQuestion":
                         arrResp = new ArrayList<>(Arrays.asList("educational", "description", "triggerQuestion"));
-                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]));
+                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), objAttributes);
                         break;
                     case "pedagogicalAspect":
                         arrResp = new ArrayList<>(Arrays.asList("educational", "description", "pedagogicalAspect"));
-                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]));
+                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), objAttributes);
                         break;
                     case "recommendedUse":
                         arrResp = new ArrayList<>(Arrays.asList("educational", "description", "recommendedUse"));
-                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]));
+                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), objAttributes);
                         break;
                 }
             }

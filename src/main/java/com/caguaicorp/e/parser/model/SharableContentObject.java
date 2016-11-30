@@ -23,6 +23,7 @@ public class SharableContentObject {
     String strDesc;
     Document docXML;
     Node ndRelation;
+    Node ndContribute;
     HashMap<String, String> arrRelations = new HashMap();
 
     Boolean isChanged = false;
@@ -125,6 +126,18 @@ public class SharableContentObject {
 
         this.ndRelation.normalize();
 
+        String strLyfeCicle = "<contribute>\n"
+                + "      <role schema=\"CEM\">Productor ejecutivo</role>\n"
+                + "      <entity entityForm=\"24933\" type=\"Persona\" src=\"info@elltechnologies.com\" "
+                + "         institution=\"ELL Technologies Ltd.\" country=\"CA\">Martin, Bill</entity>\n"
+                + "      <date>30-04-2015</date>\n"
+                + "    </contribute>";
+
+        this.ndContribute = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+                .parse(new ByteArrayInputStream(strLyfeCicle.getBytes(StandardCharsets.UTF_8))).getDocumentElement();
+
+        this.ndContribute.normalize();
+
         ReadElement();
     }
 
@@ -143,19 +156,16 @@ public class SharableContentObject {
         NodeList list = ndRoot.getChildNodes();
         String ReadNode = XMLUtility.ReadNode(list, new ArrayList(Arrays.asList(new String[]{"relation"})));
 
-        if (ReadNode == null) {
-            return false;
-        }
-        return true;
+        return !(ReadNode == null);
     }
 
     public void SetRelation(SharableContentObject scoObjeto, String strKind) {
         isChanged = true;
         Node ndData = this.ndRelation.cloneNode(true);
         NodeList ndListTemp = ndData.getChildNodes();
-        ndListTemp = XMLUtility.ChangeNode(ndListTemp, new ArrayList(Arrays.asList(new String[]{"kind"})), strKind);
-        ndListTemp = XMLUtility.ChangeNode(ndListTemp, new ArrayList(Arrays.asList(new String[]{"resource", "identifier", "catalog"})), scoObjeto.strID);
-        ndListTemp = XMLUtility.ChangeNode(ndListTemp, new ArrayList(Arrays.asList(new String[]{"resource", "description"})), scoObjeto.strDesc);
+        XMLUtility.ChangeNode(ndListTemp, new ArrayList(Arrays.asList(new String[]{"kind"})), strKind, null);
+        XMLUtility.ChangeNode(ndListTemp, new ArrayList(Arrays.asList(new String[]{"resource", "identifier", "catalog"})), scoObjeto.strID, null);
+        XMLUtility.ChangeNode(ndListTemp, new ArrayList(Arrays.asList(new String[]{"resource", "description"})), scoObjeto.strDesc, null);
 
         this.docXML.adoptNode(ndData);
         this.docXML.getDocumentElement().appendChild(ndData);

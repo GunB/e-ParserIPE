@@ -42,10 +42,8 @@ public class FilesUtility {
         try (PrintWriter out = new PrintWriter(strBase)) {
 
             String text = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"
-                    
                     + "<cem:cem xmlns:cem=\"http://ltsc.ieee.org/xsd/CEM\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
                     + "xsi:schemaLocation=\"http://ltsc.ieee.org/xsd/LOM lomCustom.xsd\" xsi:type=\" cem:cem\">"
-                    
                     + "\n<general>"
                     + "\n<identifier>"
                     + "\n<catalog catName=\"edistribution\" catSource=\"http://www.edistribution.co/\"/>"
@@ -56,7 +54,10 @@ public class FilesUtility {
                     + "\n<structure schema=\"CEM\"/>"
                     + "\n<aggregationLevel schema=\"CEM\"/>"
                     + "\n</general>"
-                    + "\n<lifeCycle/>"
+                    + "\n<lifeCycle>"
+                    + "<version date=\"30-04-2015\">1.0</version>\n"
+                    + "<status>Publicado</status>"
+                    + "\n</lifeCycle>"
                     + "\n<metaMetadata/>"
                     + "\n<technical/>"
                     + "\n<educational>"
@@ -70,7 +71,6 @@ public class FilesUtility {
                     + "\n<rights/>"
                     + "\n<classification>"
                     + "\n</classification>"
-                    
                     + "\n</cem>";
             out.println(text);
         }
