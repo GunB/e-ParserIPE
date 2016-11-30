@@ -37,39 +37,44 @@ public class FilesUtility {
         String strBase = strRoot + File.separator + strFile2Change;
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        File f = new File(strBase);
-        if (!f.exists()) {
-            try (PrintWriter out = new PrintWriter(strBase)) {
+        //File f = new File(strBase);
+        //if (!f.exists()) {
+        try (PrintWriter out = new PrintWriter(strBase)) {
 
-                String text = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><lom xmlns=\"http://ltsc.ieee.org/xsd/LOM\">"
-                        + "\n<general>"
-                        + "\n<identifier>"
-                        + "\n<catalog catName=\"\" catSource=\"\"/>"
-                        + "\n</identifier>"
-                        + "\n<title lang=\"\" subtitle=\"\"></title>"
-                        + "\n<description lang=\"es\"/>"
-                        + "\n<keyword lang=\"\"/>"
-                        + "\n<structure schema=\"CEM\"/>"
-                        + "\n<aggregationLevel schema=\"CEM\"/>"
-                        + "\n</general>"
-                        + "\n<lifeCycle/>"
-                        + "\n<metaMetadata/>"
-                        + "\n<technical/>"
-                        + "\n<educational>"
-                        + "\n<description>"
-                        + "\n<recommendedUse lang=\"es\"/>"
-                        + "\n<triggerQuestion lang=\"es\"/>"
-                        + "\n<pedagogicalAspect lang=\"es\"/>"
-                        + "\n<learningGoal lang=\"es\"/>"
-                        + "\n</description>"
-                        + "\n</educational>"
-                        + "\n<rights/>"
-                        + "\n<classification>"
-                        + "\n</classification>"
-                        + "\n</lom>";
-                out.println(text);
-            }
+            String text = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"
+                    
+                    + "<cem:cem xmlns:cem=\"http://ltsc.ieee.org/xsd/CEM\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
+                    + "xsi:schemaLocation=\"http://ltsc.ieee.org/xsd/LOM lomCustom.xsd\" xsi:type=\" cem:cem\">"
+                    
+                    + "\n<general>"
+                    + "\n<identifier>"
+                    + "\n<catalog catName=\"edistribution\" catSource=\"http://www.edistribution.co/\"/>"
+                    + "\n</identifier>"
+                    + "\n<title lang=\"\" subtitle=\"\"></title>"
+                    + "\n<description lang=\"es\"/>"
+                    + "\n<keyword lang=\"es\"/>"
+                    + "\n<structure schema=\"CEM\"/>"
+                    + "\n<aggregationLevel schema=\"CEM\"/>"
+                    + "\n</general>"
+                    + "\n<lifeCycle/>"
+                    + "\n<metaMetadata/>"
+                    + "\n<technical/>"
+                    + "\n<educational>"
+                    + "\n<description>"
+                    + "\n<recommendedUse lang=\"es\"/>"
+                    + "\n<triggerQuestion lang=\"es\"/>"
+                    + "\n<pedagogicalAspect lang=\"es\"/>"
+                    + "\n<learningGoal lang=\"es\"/>"
+                    + "\n</description>"
+                    + "\n</educational>"
+                    + "\n<rights/>"
+                    + "\n<classification>"
+                    + "\n</classification>"
+                    
+                    + "\n</cem>";
+            out.println(text);
         }
+        //}
         //FileInputStream in = new FileInputStream(new File(strBase));
         //doc = dBuilder.parse(in, "UTF-8");
         return (Document) dBuilder.parse(strBase).cloneNode(true);
