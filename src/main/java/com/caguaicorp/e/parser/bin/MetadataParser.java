@@ -21,6 +21,7 @@ import org.xml.sax.SAXException;
 import com.caguaicorp.e.parser.utiility.ExcelReader;
 import com.caguaicorp.e.parser.utiility.FilesUtility;
 import com.caguaicorp.e.parser.utiility.JFolderChooser;
+import java.util.TreeMap;
 
 public class MetadataParser implements Runnable {
 
@@ -69,10 +70,10 @@ public class MetadataParser implements Runnable {
 
         ArrayList<File> listFilesForFolder = JFolderChooser.listRawFilesForFolder(baseFileDirectory, true);
 
-        HashMap<String, SharableContentObject> arrRec = new HashMap();
-        HashMap<String, SharableContentObject> arrObj = new HashMap();
-        HashMap<String, SharableContentObject> arrLec = new HashMap();
-        HashMap<String, SharableContentObject> arrLvl = new HashMap();
+        TreeMap<String, SharableContentObject> arrRec = new TreeMap();
+        TreeMap<String, SharableContentObject> arrObj = new TreeMap();
+        TreeMap<String, SharableContentObject> arrLec = new TreeMap();
+        TreeMap<String, SharableContentObject> arrLvl = new TreeMap();
 
         ArrayList<ExcelFormat> arrExcel = new ArrayList();
 
@@ -169,24 +170,24 @@ public class MetadataParser implements Runnable {
                 //HashMap value = entry.getValue();
                 String type = SharableContentObject.GetType(key);
 
-                HashMap arrActual = null;
+                TreeMap arrActual = null;
 
                 //<editor-fold defaultstate="collapsed" desc="Typing">
                 switch (type) {
                     case "NIVEL":
-                        arrActual = (HashMap) arrLvl.clone();
+                        arrActual = (TreeMap) arrLvl.clone();
                         //arrLvl.put(scoData.getStrID(), scoData);
                         break;
                     case "LECCION":
-                        arrActual = (HashMap) arrLec.clone();
+                        arrActual = (TreeMap) arrLec.clone();
                         //arrLec.put(scoData.getStrID(), scoData);
                         break;
                     case "OBJETO":
-                        arrActual = (HashMap) arrObj.clone();
+                        arrActual = (TreeMap) arrObj.clone();
                         //arrObj.put(scoData.getStrID(), scoData);
                         break;
                     case "RECURSO":
-                        arrActual = (HashMap) arrRec.clone();
+                        arrActual = (TreeMap) arrRec.clone();
                         //arrRec.put(scoData.getStrID(), scoData);
                         break;
                 }
