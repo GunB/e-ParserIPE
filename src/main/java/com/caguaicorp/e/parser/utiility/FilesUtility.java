@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileStore;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,14 +38,13 @@ public class FilesUtility {
         String strBase = strRoot + File.separator + strFile2Change;
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        //File f = new File(strBase);
+        File f = new File(strBase);
         //if (!f.exists()) {
-        try (PrintWriter out = new PrintWriter(strBase)) {
+        try (PrintWriter out = new PrintWriter(f, "UTF-8")) {
 
             String text = ""
-                    + "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
-                    + "<lom xmlns=\"http://ltsc.ieee.org/xsd/LOM\">\n"
-                    + "	<general>\n"
+                    + "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><cem:cem xmlns:cem=\"http://ltsc.ieee.org/xsd/CEM\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://ltsc.ieee.org/xsd/LOM lomCustom.xsd\" xsi:type=\"cem:cem\">\n"
+                    + "<general>"
                     + "		<identifier>\n"
                     + "			<catalog catName=\"edistribution\" catSource=\"http://www.edistribution.co/\"/>\n"
                     + "		</identifier>\n"
@@ -57,6 +57,7 @@ public class FilesUtility {
                     + "	<lifeCycle>\n"
                     + "		<version date=\"30-04-2015\">1.0</version>\n"
                     + "		<status>Publicado</status>\n"
+                    //<editor-fold defaultstate="collapsed" desc="TODO:Contribuyentes que luego deberán ser leídos">
                     + "		<contribute>\n"
                     + "			<role schema=\"CEM\">Productor ejecutivo</role>\n"
                     + "			<entity country=\"CO\" entityForm=\"79786415\" institution=\"eDistribution SAS\" src=\"gdiaz@edistribution.co\" type=\"Persona\">Díaz Ochoa, Gustavo Andrés</entity>\n"
@@ -207,6 +208,8 @@ public class FilesUtility {
                     + "			<entity country=\"CO\" entityForm=\"1016049594\" institution=\"eDistribution SAS\" src=\"egarcia.instrumentacion@gmail.com\" type=\"Persona\">García Sánchez, Elkin Jair</entity>\n"
                     + "			<date>01-12-2016</date>\n"
                     + "		</contribute>\n"
+                    //*/
+                    //</editor-fold>
                     + "	</lifeCycle>\n"
                     + "	<metaMetadata/>\n"
                     + "	<technical/>\n"
@@ -221,13 +224,14 @@ public class FilesUtility {
                     + "	<rights/>\n"
                     + "	<classification>\n"
                     + "	</classification>\n"
-                    + "</lom>";
+                    + "</cem:cem>";
             out.println(text);
+            out.close();
         }
         //}
-        //FileInputStream in = new FileInputStream(new File(strBase));
+        FileInputStream in = new FileInputStream(new File(strBase));
         //doc = dBuilder.parse(in, "UTF-8");
-        return (Document) dBuilder.parse(strBase).cloneNode(true);
+        return (Document) dBuilder.parse(in, "UTF-8").cloneNode(true);
     }
 
     public static void copyFolder(File src, File dest)
