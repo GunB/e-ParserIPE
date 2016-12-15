@@ -43,7 +43,7 @@ public class FilesUtility {
 
             String text = ""
                     + "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><cem:cem xmlns:cem=\"http://ltsc.ieee.org/xsd/CEM\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://ltsc.ieee.org/xsd/LOM lomCustom.xsd\" xsi:type=\"cem:cem\">\n"
-                    + "<general>"
+                    + "<general>\n"
                     + "		<identifier>\n"
                     + "			<catalog catName=\"edistribution\" catSource=\"http://www.edistribution.co/\"/>\n"
                     + "		</identifier>\n"
