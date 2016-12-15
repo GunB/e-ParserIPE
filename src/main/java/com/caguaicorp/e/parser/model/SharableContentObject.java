@@ -127,7 +127,7 @@ public class SharableContentObject {
 
         this.ndRelation.normalize();
 
-        String strLyfeCicle = ""
+        /*String strLyfeCicle = ""
                 + "    <contribute>\n"
                 + "      <role schema=\"CEM\">Productor ejecutivo</role>\n"
                 + "      <entity entityForm=\"24933\" type=\"Persona\" src=\"info@elltechnologies.com\" "
@@ -136,7 +136,7 @@ public class SharableContentObject {
                 + "    </contribute>";
 
         this.ndContribute = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-                .parse(new ByteArrayInputStream(strLyfeCicle.getBytes(StandardCharsets.UTF_8))).getDocumentElement();
+                .parse(new ByteArrayInputStream(strLyfeCicle.getBytes(StandardCharsets.UTF_8))).getDocumentElement();*/
 
         this.ndContribute.normalize();
 
