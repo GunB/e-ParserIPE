@@ -40,7 +40,7 @@ public class XMLReader
     }
 
     @Override
-    public Document Read() throws IOException, SAXException, ParserConfigurationException {
+    public Document Read(boolean createXML) throws IOException, SAXException, ParserConfigurationException {
         File fXmlFile = this.fileData;
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();

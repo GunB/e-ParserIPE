@@ -112,7 +112,7 @@ public class SharableContentObject {
     public SharableContentObject(ElementHandler eleData) throws IOException, SAXException, ParserConfigurationException, NullPointerException {
         this.eleData = eleData;
 
-        this.docXML = eleData.Read();
+        this.docXML = eleData.Read(true);
 
         this.docXML.getDocumentElement().normalize();
         
