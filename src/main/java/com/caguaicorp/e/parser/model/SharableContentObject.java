@@ -126,7 +126,8 @@ public class SharableContentObject {
 
         this.ndRelation.normalize();
 
-        String strLyfeCicle = "<contribute>\n"
+        String strLyfeCicle = ""
+                + "    <contribute>\n"
                 + "      <role schema=\"CEM\">Productor ejecutivo</role>\n"
                 + "      <entity entityForm=\"24933\" type=\"Persona\" src=\"info@elltechnologies.com\" "
                 + "         institution=\"ELL Technologies Ltd.\" country=\"CA\">Martin, Bill</entity>\n"

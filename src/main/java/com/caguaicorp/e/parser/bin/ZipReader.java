@@ -53,22 +53,20 @@ public class ZipReader
             throws IOException, SAXException, ParserConfigurationException {
         Document doc = null;
 
+        try {
+            WriteFinish(FilesUtility.XmlFormatBase());
+            this.zipFile = new ZipFile(this.file);
+        } catch (TransformerException ex) {
+            Logger.getLogger(ZipReader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        doc = Read();
+
         for (Enumeration e = this.zipFile.entries(); e.hasMoreElements();) {
             ZipEntry entryIn = (ZipEntry) e.nextElement();
             String strName = entryIn.getName();
             if (strName.equalsIgnoreCase(this.strFile2Change)) {
                 doc = XMLUtility.newDocumentFromInputStream(this.zipFile.getInputStream(entryIn));
             }
-        }
-
-        if (doc == null) {
-            try {
-                WriteFinish(FilesUtility.XmlFormatBase());
-                this.zipFile = new ZipFile(this.file);
-            } catch (TransformerException ex) {
-                Logger.getLogger(ZipReader.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            doc = Read();
         }
 
         return doc;
