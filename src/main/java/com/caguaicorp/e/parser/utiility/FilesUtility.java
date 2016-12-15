@@ -8,7 +8,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
@@ -22,11 +21,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 public class FilesUtility {
@@ -37,22 +34,16 @@ public class FilesUtility {
     public static String strFile2Change = "metadata.xml";
 
     public static Document XmlFormatBase() throws ParserConfigurationException, SAXException, IOException {
-        //String strBase = strRoot + File.separator + strFile2Change;
-        //DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        //DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        //File f = new File(strBase);
-        //if (!f.exists()) {
-        //try (PrintWriter out = new PrintWriter(f, "UTF-8")) {
-
         String text = ""
-                + "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><cem:cem xmlns:cem=\"http://ltsc.ieee.org/xsd/CEM\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://ltsc.ieee.org/xsd/LOM lomCustom.xsd\" xsi:type=\"cem:cem\">\n"
-                + "<general>\n"
+                + "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
+                + "<cem:cem xmlns:cem=\"http://ltsc.ieee.org/xsd/CEM\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://ltsc.ieee.org/xsd/LOM lomCustom.xsd\" xsi:type=\"cem:cem\">\n"
+                + "     <general>\n"
                 + "		<identifier>\n"
                 + "			<catalog catName=\"edistribution\" catSource=\"http://www.edistribution.co/\"/>\n"
                 + "		</identifier>\n"
-                + "		<title lang=\"\" subtitle=\"\"></title>\n"
-                + "		<description lang=\"\"/>\n"
-                + "		<keyword lang=\"\"/>\n"
+                + "		<title lang=\"es\" subtitle=\"\"></title>\n"
+                + "		<description lang=\"es\"/>\n"
+                + "		<keyword lang=\"es\"/>\n"
                 + "		<structure schema=\"CEM\"/>\n"
                 + "		<aggregationLevel schema=\"CEM\"/>\n"
                 + "	</general>\n"
@@ -217,23 +208,16 @@ public class FilesUtility {
                 + "	<technical/>\n"
                 + "	<educational>\n"
                 + "		<description>\n"
-                + "			<recommendedUse lang=\"\"/>\n"
-                + "			<triggerQuestion lang=\"\"/>\n"
-                + "			<pedagogicalAspect lang=\"\"/>\n"
-                + "			<learningGoal lang=\"\"/>\n"
+                + "			<recommendedUse lang=\"es\"/>\n"
+                + "			<triggerQuestion lang=\"es\"/>\n"
+                + "			<pedagogicalAspect lang=\"es\"/>\n"
+                + "			<learningGoal lang=\"es\"/>\n"
                 + "		</description>\n"
                 + "	</educational>\n"
                 + "	<rights/>\n"
                 + "	<classification>\n"
                 + "	</classification>\n"
                 + "</cem:cem>";
-        //out.println(text);
-        //out.close();
-        //}
-        //}
-        //FileInputStream in = new FileInputStream(new File(strBase));
-        //doc = dBuilder.parse(in, "UTF-8");
-        //return (Document) dBuilder.parse(in, "UTF-8").cloneNode(true);
         Document ndXml = DocumentBuilderFactory.newInstance().newDocumentBuilder()
                 .parse(new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8)));
 

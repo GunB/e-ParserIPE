@@ -68,7 +68,7 @@ public class ExcelFormat {
 
     public Document SharableContentObjectCompleter(SharableContentObject scoSco) throws ParserConfigurationException, SAXException, IOException {
         Document docu = (Document) this.doc.cloneNode(true);
-        Node staff = docu.getElementsByTagName("cem:cem").item(0);
+        Node staff = docu.getElementsByTagName(docu.getDocumentElement().getNodeName()).item(0);
         NodeList list = staff.getChildNodes();
 
         HashMap<String, String> objObjeto = arrObjects.get(scoSco.getStrID());
