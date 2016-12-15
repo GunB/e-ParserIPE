@@ -115,6 +115,7 @@ public class SharableContentObject {
         this.docXML = eleData.Read();
 
         this.docXML.getDocumentElement().normalize();
+        
         System.out.println("Root element :" + this.docXML.getDocumentElement().getNodeName());
 
         String strNode = "<relation><kind schema=\"\"/><resource><identifier>"
