@@ -115,7 +115,7 @@ public class SharableContentObject {
         this.docXML = eleData.Read(true);
 
         this.docXML.getDocumentElement().normalize();
-        
+
         System.out.println("Root element :" + this.docXML.getDocumentElement().getNodeName());
 
         String strNode = "<relation><kind schema=\"\"/><resource><identifier>"
@@ -127,19 +127,6 @@ public class SharableContentObject {
 
         this.ndRelation.normalize();
 
-        String strLyfeCicle = ""
-                + "    <contribute>\n"
-                + "      <role schema=\"CEM\">Productor ejecutivo</role>\n"
-                + "      <entity entityForm=\"24933\" type=\"Persona\" src=\"info@elltechnologies.com\" "
-                + "         institution=\"ELL Technologies Ltd.\" country=\"CA\">Martin, Bill</entity>\n"
-                + "      <date>30-04-2015</date>\n"
-                + "    </contribute>";
-
-        this.ndContribute = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-                .parse(new ByteArrayInputStream(strLyfeCicle.getBytes(StandardCharsets.UTF_8))).getDocumentElement();
-
-        this.ndContribute.normalize();
-
         ReadElement();
     }
 
@@ -147,16 +134,16 @@ public class SharableContentObject {
         Node ndRoot = this.docXML.getDocumentElement().cloneNode(true);
         NodeList list = ndRoot.getChildNodes();
 
-        this.strID = XMLUtility.ReadNode(list, new ArrayList(Arrays.asList(new String[]{"general", "identifier", "catalog"})));
-        this.strNombre = XMLUtility.ReadNode(list, new ArrayList(Arrays.asList(new String[]{"general", "title"})));
-        this.strDesc = XMLUtility.ReadNode(list, new ArrayList(Arrays.asList(new String[]{"general", "description"})));
+        this.strID = XMLUtility.ReadNode(list, new ArrayList(Arrays.asList(new String[]{"general", "identifier", "catalog"}))).getTextContent();
+        this.strNombre = XMLUtility.ReadNode(list, new ArrayList(Arrays.asList(new String[]{"general", "title"}))).getTextContent();
+        this.strDesc = XMLUtility.ReadNode(list, new ArrayList(Arrays.asList(new String[]{"general", "description"}))).getTextContent();
         this.strType = GetType(this.getStrID());
     }
 
     public boolean isRelationed() {
         Node ndRoot = this.docXML.getDocumentElement().cloneNode(true);
         NodeList list = ndRoot.getChildNodes();
-        String ReadNode = XMLUtility.ReadNode(list, new ArrayList(Arrays.asList(new String[]{"relation"})));
+        Node ReadNode = XMLUtility.ReadNode(list, new ArrayList(Arrays.asList(new String[]{"relation"})));
 
         return !(ReadNode == null);
     }

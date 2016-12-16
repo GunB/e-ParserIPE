@@ -22,10 +22,12 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import com.caguaicorp.e.parser.model.XMLTag;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -102,21 +104,23 @@ public class XMLUtility {
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
                 ((Element) node).setAttribute(pair.getKey().toString(), pair.getValue().toString());
+                String attributes = ((Element) node).getAttribute((String) pair.getKey());
                 //System.out.println(pair.getKey() + " = " + pair.getValue());
                 it.remove(); // avoids a ConcurrentModificationException
             }
         }
     }
 
-    public static String ReadNode(NodeList listNode, ArrayList<String> arrStrCompare) {
-        ArrayList<String> arrTempList = arrStrCompare;
+    public static Node ReadNode(NodeList listNode, ArrayList<String> arrStrCompare) {
+        ArrayList<String> arrTempList = (ArrayList<String>) arrStrCompare.clone();
         Iterator<String> iterator = arrTempList.iterator();
 
         while (iterator.hasNext()) {
             String strCompare = (String) iterator.next();
             iterator.remove();
+            int length = listNode.getLength();
 
-            for (int i = 0; i < listNode.getLength(); i++) {
+            for (int i = 0; i < length; i++) {
                 Node node = listNode.item(i);
 
                 if (strCompare.equals(node.getNodeName())) {
@@ -124,33 +128,8 @@ public class XMLUtility {
                         return ReadNode(node.getChildNodes(), arrTempList);
                     }
                     String strResp = node.getTextContent();
-                    System.out.println("Red NODE [" + strCompare + "]: " + strResp);
-                    return strResp;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    public static String FindNode(NodeList listNode, ArrayList<String> arrStrCompare, String strData) {
-        ArrayList<String> arrTempList = arrStrCompare;
-        Iterator<String> iterator = arrTempList.iterator();
-
-        while (iterator.hasNext()) {
-            String strCompare = (String) iterator.next();
-            iterator.remove();
-
-            for (int i = 0; i < listNode.getLength(); i++) {
-                Node node = listNode.item(i);
-
-                if (strCompare.equals(node.getNodeName())) {
-                    if (iterator.hasNext()) {
-                        return FindNode(node.getChildNodes(), arrTempList, strData);
-                    }
-                    String strResp = node.getTextContent();
-                    System.out.println("Found NODE [" + strCompare + "]: " + strResp);
-                    return strResp;
+                    System.out.println("Read NODE [" + strCompare + "]: " + strResp);
+                    return node;
                 }
             }
         }

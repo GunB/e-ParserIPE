@@ -93,16 +93,15 @@ public class MetadataParser implements Runnable {
                 try {
                     scoData = new SharableContentObject(new ZipReader(strNameFolder));
                     if (scoData.getStrType().equals("VACIO")) {
-                        scoData.setStrID(strNameFolder.getName().substring(0, strNameFolder.getName().lastIndexOf('.')));
+                        String strName = strNameFolder.getName().substring(0, strNameFolder.getName().lastIndexOf('.'));
+                        scoData.setStrID(strName);
                     }
                     Log(strMessage + scoData.getStrID());
                 } catch (IOException | SAXException | ParserConfigurationException | NullPointerException ex) {
                     System.err.println("ERROR [NOT METADATA]: " + strNameFolder.getName());
                     Logger.getLogger(MetadataParser.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-
-            if (strNameFolder.getName().endsWith(".xml")) {
+            } else if (strNameFolder.getName().endsWith(".xml")) {
                 try {
                     scoData = new SharableContentObject(new XMLReader(strNameFolder));
                     if (scoData.getStrType().equals("VACIO")) {
@@ -113,9 +112,7 @@ public class MetadataParser implements Runnable {
                     System.err.println("ERROR [NOT METADATA]: " + strNameFolder.getName());
                     Logger.getLogger(MetadataParser.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-
-            if (strNameFolder.getName().endsWith(".xls") || strNameFolder.getName().endsWith(".xlsx")) {
+            } else if (strNameFolder.getName().endsWith(".xls") || strNameFolder.getName().endsWith(".xlsx")) {
                 try {
                     ExcelReader excelReader = new ExcelReader(strNameFolder);
                     ExcelFormat excelFormat;
@@ -146,6 +143,7 @@ public class MetadataParser implements Runnable {
                             break;
                         case "RECURSO":
                             arrRec.put(scoData.getStrID(), scoData);
+                            break;
                     }
                 }
             } catch (NullPointerException ex) {
@@ -190,6 +188,8 @@ public class MetadataParser implements Runnable {
                         arrActual = (TreeMap) arrRec.clone();
                         //arrRec.put(scoData.getStrID(), scoData);
                         break;
+                    case "VACIO":
+                        continue;
                 }
                 //</editor-fold>
 

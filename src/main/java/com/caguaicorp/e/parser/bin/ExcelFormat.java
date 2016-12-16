@@ -18,8 +18,12 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import com.caguaicorp.e.parser.utiility.ExcelReader;
 import com.caguaicorp.e.parser.utiility.FilesUtility;
+import com.caguaicorp.e.parser.utiility.XMLUtility;
 import static com.caguaicorp.e.parser.utiility.XMLUtility.AddNodeList2Node;
 import static com.caguaicorp.e.parser.utiility.XMLUtility.ChangeNode;
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
+import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.poi.ss.usermodel.Sheet;
 
 /**
@@ -41,7 +45,32 @@ public class ExcelFormat {
                 {"learningGoal", "Objetivo de Aprendizaje\n" + "\n (Learning Goal)"},
                 {"triggerQuestion", "Pregunta Detonante\n" + "\n(Trigger Question)"},
                 {"pedagogicalAspect", "Aspectos Pedagógicos \n" + "\n(Pedagogical Aspects)"},
-                {"recommendedUse", "Sugerencia de Uso\n" + "\n(Recommended Use)"},};
+                {"recommendedUse", "Sugerencia de Uso\n" + "\n(Recommended Use)"},
+                {"status", "Estatus"},
+                {"version", "Ciclo de Vida"},
+                {"contribute", "Contribuyentes"},
+                {"date", "Fecha"}
+            };
+
+    private Node getNodeContribute() throws ParserConfigurationException, SAXException, IOException {
+
+        String strLyfeCicle = ""
+                + "<contribute>\n"
+                + "<role schema=\"CEM\"></role>\n"
+                + "<entity entityForm=\"\" type=\"\" src=\"\" institution=\"\" country=\"\">"
+                + "DATA"
+                + "</entity>\n"
+                + "<date></date>\n"
+                + "</contribute>\n";
+
+        Node ndContribute = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+                .parse(new ByteArrayInputStream(strLyfeCicle.getBytes(StandardCharsets.UTF_8))).getDocumentElement();
+
+        ndContribute.normalize();
+
+        ndContribute.cloneNode(true);
+        return ndContribute;
+    }
 
     public String getName() {
         return filExcel.getStrName();
@@ -73,22 +102,25 @@ public class ExcelFormat {
 
         HashMap<String, String> objObjeto = arrObjects.get(scoSco.getStrID());
         HashMap<String, String> objAttributes = new HashMap<>();
-        
-        objAttributes.put("lang", scoSco.getStrID().substring(2));
-        
+        HashMap<String, String> objDate = new HashMap<>();
+
+        objAttributes.put("lang", scoSco.getStrID().substring(0, 2));
+        objDate.put("date", objObjeto.get(arrNames[11][1]));
+
         ArrayList arrResp;
 
         for (String[] arrName : arrNames) {
             if (objObjeto.containsKey(arrName[1])) {
                 switch (arrName[0]) {
+                    //<editor-fold defaultstate="collapsed" desc="comment">
                     case "title":
                         arrResp = new ArrayList<>(Arrays.asList("general", "title"));
-                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), objAttributes);
+                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), (HashMap) objAttributes.clone());
                         scoSco.setStrNombre(objObjeto.get(arrName[1]));
                         break;
                     case "description":
                         arrResp = new ArrayList<>(Arrays.asList("general", "description"));
-                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), objAttributes);
+                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), (HashMap) objAttributes.clone());
                         scoSco.setStrDesc(objObjeto.get(arrName[1]));
                         break;
                     case "identifier":
@@ -99,24 +131,93 @@ public class ExcelFormat {
                     case "keyword":
                         String[] arrKeyWords = objObjeto.get(arrName[1]).split(",");
                         arrResp = new ArrayList<>(Arrays.asList("general", "keyword"));
+                        list = ChangeNode(list, arrResp, null, (HashMap) objAttributes.clone());
                         list = AddNodeList2Node(list, docu, arrResp, arrKeyWords, new XMLTag("li"));
-                        list = ChangeNode(list, arrResp, null, objAttributes);
                         break;
                     case "learningGoal":
                         arrResp = new ArrayList<>(Arrays.asList("educational", "description", "learningGoal"));
-                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), objAttributes);
+                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), (HashMap) objAttributes.clone());
                         break;
                     case "triggerQuestion":
                         arrResp = new ArrayList<>(Arrays.asList("educational", "description", "triggerQuestion"));
-                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), objAttributes);
+                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), (HashMap) objAttributes.clone());
                         break;
                     case "pedagogicalAspect":
                         arrResp = new ArrayList<>(Arrays.asList("educational", "description", "pedagogicalAspect"));
-                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), objAttributes);
+                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), (HashMap) objAttributes.clone());
                         break;
                     case "recommendedUse":
                         arrResp = new ArrayList<>(Arrays.asList("educational", "description", "recommendedUse"));
-                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), objAttributes);
+                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), (HashMap) objAttributes.clone());
+                        break;
+                    //</editor-fold>
+                    case "status":
+                        arrResp = new ArrayList<>(Arrays.asList("lifeCycle", "status"));
+                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), (HashMap) objAttributes.clone());
+                        scoSco.setStrNombre(objObjeto.get(arrName[1]));
+                        break;
+                    case "version":
+                        arrResp = new ArrayList<>(Arrays.asList("lifeCycle", "status"));
+                        list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), (HashMap) objDate.clone());
+                        scoSco.setStrNombre(objObjeto.get(arrName[1]));
+                        break;
+                    case "contribute":
+                        String[] arrContributes = objObjeto.get(arrName[1]).split(";");
+
+                        for (String arrContribute : arrContributes) {
+                            HashMap<String, String> mapContAttributes = new HashMap<>();
+                            String[] arrData = arrContribute.split(",");
+                            Node ndData = getNodeContribute();
+                            NodeList ndListTemp = ndData.getChildNodes();
+                            String contributeName = "";
+
+                            //<editor-fold defaultstate="collapsed" desc="Read line contribute">
+                            for (int i = 0; i < arrData.length; i++) {
+                                String string = arrData[i].trim();
+
+                                switch (i) {
+                                    case 0:
+                                        XMLUtility.ChangeNode(ndListTemp,
+                                                new ArrayList(Arrays.asList(new String[]{"role"})),
+                                                string,
+                                                null);
+                                        break;
+                                    case 1:
+                                        mapContAttributes.put("entityForm", string);
+                                        mapContAttributes.put("institution", "eDistribution SAS");
+                                        mapContAttributes.put("src", "contacto@edistribution.co");
+                                        mapContAttributes.put("type", "Persona");
+                                        mapContAttributes.put("country", "CO");
+                                        /*XMLUtility.ChangeNode(ndListTemp,
+                                        new ArrayList(Arrays.asList(new String[]{"role"})),
+                                        string,
+                                        null);*/
+
+                                        break;
+                                    case 2:
+                                        contributeName += string;
+                                        break;
+                                    case 3:
+                                        contributeName += " , " + string;
+                                        XMLUtility.ChangeNode(ndListTemp,
+                                                new ArrayList(Arrays.asList(new String[]{"entity"})),
+                                                contributeName,
+                                                mapContAttributes);
+
+                                        XMLUtility.ChangeNode(ndListTemp,
+                                                new ArrayList(Arrays.asList(new String[]{"date"})),
+                                                objDate.get("date"),
+                                                null);
+                                        break;
+                                }
+
+                            }
+                            //</editor-fold>
+
+                            docu.adoptNode(ndData);
+                            Node ndPrincipalNode = XMLUtility.ReadNode(list, new ArrayList(Arrays.asList(new String[]{"lifeCycle"})));
+                            ndPrincipalNode.appendChild(ndData);
+                        }
                         break;
                 }
             }
