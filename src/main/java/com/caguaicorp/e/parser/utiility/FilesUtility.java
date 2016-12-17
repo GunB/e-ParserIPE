@@ -48,8 +48,8 @@ public class FilesUtility {
                 + "		<aggregationLevel schema=\"CEM\"/>\n"
                 + "	</general>\n"
                 + "	<lifeCycle>\n"
-                + "		<version date=\"\">1.0</version>\n"
-                + "		<status>Publicado</status>\n"
+                + "		<version date=\"\"></version>\n"
+                + "		<status></status>\n"
                 //<editor-fold defaultstate="collapsed" desc="TODO:Contribuyentes que luego deberán ser leídos">
                 /*
                 + "		<contribute>\n"

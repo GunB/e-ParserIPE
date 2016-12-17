@@ -39,17 +39,17 @@ public class ExcelFormat {
     String[][] arrNames
             = {
                 {"identifier", "Nomenclatura"},
+                {"date", "Fecha"},
                 {"title", "Título"},
                 {"description", "Descripción"},
                 {"keyword", "Palabras Claves"},
-                {"learningGoal", "Objetivo de Aprendizaje\n" + "\n (Learning Goal)"},
-                {"triggerQuestion", "Pregunta Detonante\n" + "\n(Trigger Question)"},
-                {"pedagogicalAspect", "Aspectos Pedagógicos \n" + "\n(Pedagogical Aspects)"},
-                {"recommendedUse", "Sugerencia de Uso\n" + "\n(Recommended Use)"},
                 {"status", "Estatus"},
                 {"version", "Ciclo de Vida"},
-                {"contribute", "Contribuyentes"},
-                {"date", "Fecha"}
+                {"learningGoal", "Objetivo de Aprendizaje\n" + " (Learning Goal)"},
+                {"triggerQuestion", "Pregunta Detonante\n" + "(Trigger Question)"},
+                {"pedagogicalAspect", "Aspectos Pedagógicos \n" + "(Pedagogical Aspects)"},
+                {"recommendedUse", "Sugerencia de Uso\n" + "(Recommended Use)"},
+                {"contribute", "Contribuyentes"}
             };
 
     private Node getNodeContribute() throws ParserConfigurationException, SAXException, IOException {
@@ -105,7 +105,8 @@ public class ExcelFormat {
         HashMap<String, String> objDate = new HashMap<>();
 
         objAttributes.put("lang", scoSco.getStrID().substring(0, 2));
-        objDate.put("date", objObjeto.get(arrNames[11][1]));
+        
+        objDate.put("date", objObjeto.get(arrNames[1][1]));
 
         ArrayList arrResp;
 

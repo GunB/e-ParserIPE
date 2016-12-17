@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -114,12 +116,25 @@ public final class ExcelReader {
                 Cell cell = cellIterator.next();
                 //Check the cell type and format accordingly
                 switch (cell.getCellType()) {
-                    case Cell.CELL_TYPE_NUMERIC:
-                        objTemp = cell.getNumericCellValue() + "";
-                        break;
                     case Cell.CELL_TYPE_STRING:
-                        objTemp = cell.getStringCellValue();
+                        objTemp = cell.getRichStringCellValue().getString();
                         break;
+                    case Cell.CELL_TYPE_NUMERIC:
+                        if (DateUtil.isCellDateFormatted(cell)) {
+                            SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy"); 
+                            objTemp = dt.format(cell.getDateCellValue());
+                        } else {
+                            objTemp = cell.getNumericCellValue() + "";
+                        }
+                        break;
+                    case Cell.CELL_TYPE_BOOLEAN:
+                        objTemp = cell.getBooleanCellValue() + "";
+                        break;
+                    case Cell.CELL_TYPE_FORMULA:
+                        objTemp = cell.getCellFormula();
+                        break;
+                    default:
+                        System.out.println();
                 }
 
                 objTemp = objTemp.trim();
