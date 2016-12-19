@@ -158,7 +158,7 @@ public class ExcelFormat {
                         scoSco.setStrNombre(objObjeto.get(arrName[1]));
                         break;
                     case "version":
-                        arrResp = new ArrayList<>(Arrays.asList("lifeCycle", "status"));
+                        arrResp = new ArrayList<>(Arrays.asList("lifeCycle", "version"));
                         list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), (HashMap) objDate.clone());
                         scoSco.setStrNombre(objObjeto.get(arrName[1]));
                         break;
