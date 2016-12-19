@@ -251,10 +251,10 @@ public class Index extends javax.swing.JFrame {
 
         tbbData.addTab("Lista de archivos", pnlData);
 
-        txtConsole.setBackground(new java.awt.Color(0, 51, 51));
+        txtConsole.setBackground(new java.awt.Color(153, 0, 51));
         txtConsole.setColumns(20);
         txtConsole.setFont(new java.awt.Font("Monospaced", 1, 13)); // NOI18N
-        txtConsole.setForeground(new java.awt.Color(0, 255, 51));
+        txtConsole.setForeground(new java.awt.Color(255, 255, 255));
         txtConsole.setRows(5);
         jScrollPane1.setViewportView(txtConsole);
 
