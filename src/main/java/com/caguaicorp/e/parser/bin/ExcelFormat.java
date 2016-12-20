@@ -43,13 +43,13 @@ public class ExcelFormat {
                 {"title", "Título"},
                 {"description", "Descripción"},
                 {"keyword", "Palabras Claves"},
-                {"status", "Estatus"},
-                {"version", "Ciclo de Vida"},
                 {"learningGoal", "Objetivo de Aprendizaje\n" + " (Learning Goal)"},
                 {"triggerQuestion", "Pregunta Detonante\n" + "(Trigger Question)"},
                 {"pedagogicalAspect", "Aspectos Pedagógicos \n" + "(Pedagogical Aspects)"},
                 {"recommendedUse", "Sugerencia de Uso\n" + "(Recommended Use)"},
-                {"contribute", "Contribuyentes"}
+                //{"status", "Estatus"},
+                //{"version", "Ciclo de Vida"},
+                //{"contribute", "Contribuyentes"}
             };
 
     private Node getNodeContribute() throws ParserConfigurationException, SAXException, IOException {
@@ -152,6 +152,7 @@ public class ExcelFormat {
                         list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), (HashMap) objAttributes.clone());
                         break;
                     //</editor-fold>
+                        
                     case "status":
                         arrResp = new ArrayList<>(Arrays.asList("lifeCycle", "status"));
                         list = ChangeNode(list, arrResp, objObjeto.get(arrName[1]), (HashMap) objAttributes.clone());
@@ -189,10 +190,6 @@ public class ExcelFormat {
                                         mapContAttributes.put("src", "contacto@edistribution.co");
                                         mapContAttributes.put("type", "Persona");
                                         mapContAttributes.put("country", "CO");
-                                        /*XMLUtility.ChangeNode(ndListTemp,
-                                        new ArrayList(Arrays.asList(new String[]{"role"})),
-                                        string,
-                                        null);*/
 
                                         break;
                                     case 2:
@@ -220,6 +217,8 @@ public class ExcelFormat {
                             ndPrincipalNode.appendChild(ndData);
                         }
                         break;
+                        
+                        //*/
                 }
             }
         }
