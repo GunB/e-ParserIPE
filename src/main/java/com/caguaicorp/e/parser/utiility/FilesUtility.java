@@ -50,7 +50,7 @@ public class FilesUtility {
                 + "	</general>\n"
                 + "	<lifeCycle>\n"
                 + "		<version date=\"" + actualDate + "\">1.0</version>\n"
-                + "		<status></status>\n"
+                + "		<status>Publicado</status>\n"
                 //<editor-fold defaultstate="collapsed" desc="TODO:Contribuyentes que luego deberán ser leídos">
 
                 + "		<contribute>\n"
