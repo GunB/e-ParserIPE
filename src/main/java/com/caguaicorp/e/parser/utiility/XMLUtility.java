@@ -72,7 +72,7 @@ public class XMLUtility {
     }
 
     public static NodeList ChangeNode(NodeList listNode, ArrayList<String> arrStrCompare, String strNewValue, HashMap<String, String> mapAttributes) {
-        ArrayList<String> arrTempList = arrStrCompare;
+        ArrayList<String> arrTempList = (ArrayList<String>) arrStrCompare.clone();
         Iterator<String> iterator = arrTempList.iterator();
 
         while (iterator.hasNext()) {

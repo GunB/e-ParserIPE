@@ -105,7 +105,7 @@ public class ExcelFormat {
         HashMap<String, String> objDate = new HashMap<>();
 
         objAttributes.put("lang", scoSco.getStrID().substring(0, 2));
-        
+
         objDate.put("date", objObjeto.get(arrNames[1][1]));
 
         ArrayList arrResp;
