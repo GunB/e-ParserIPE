@@ -121,7 +121,7 @@ public final class ExcelReader {
                         break;
                     case Cell.CELL_TYPE_NUMERIC:
                         if (DateUtil.isCellDateFormatted(cell)) {
-                            SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy"); 
+                            SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
                             objTemp = dt.format(cell.getDateCellValue());
                         } else {
                             objTemp = cell.getNumericCellValue() + "";
@@ -134,7 +134,7 @@ public final class ExcelReader {
                         objTemp = cell.getCellFormula();
                         break;
                     default:
-                        System.out.println();
+                        System.out.println(cell);
                 }
 
                 objTemp = objTemp.trim();
@@ -157,7 +157,7 @@ public final class ExcelReader {
 
             //System.out.println("");
         }
-
+        System.out.println(objSheet);
         return objSheet;
     }
 

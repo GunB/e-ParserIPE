@@ -118,9 +118,16 @@ public class SharableContentObject {
 
         System.out.println("Root element :" + this.docXML.getDocumentElement().getNodeName());
 
-        String strNode = "<relation><kind schema=\"\"/><resource><identifier>"
-                + "<catalog catName=\"\" catSource=\"\"/></identifier><description lang=\"\"/>"
-                + "</resource></relation>";
+        String strNode = ""
+                + "	<relation>\n"
+                + "		<kind schema=\"\"></kind>\n"
+                + "		<resource>\n"
+                + "			<identifier>\n"
+                + "				<catalog catName=\"\" catSource=\"\"></catalog>\n"
+                + "			</identifier>\n"
+                + "			<description lang=\"\"/>\n"
+                + "		</resource>\n"
+                + "	</relation>";
 
         this.ndRelation = DocumentBuilderFactory.newInstance().newDocumentBuilder()
                 .parse(new ByteArrayInputStream(strNode.getBytes(StandardCharsets.UTF_8))).getDocumentElement();
