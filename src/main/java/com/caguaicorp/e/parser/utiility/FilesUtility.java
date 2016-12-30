@@ -31,7 +31,7 @@ public class FilesUtility {
     public static String strRoot = System.getProperty("user.home");
     private static final long unixTime = System.currentTimeMillis() / 1000L;
     private static final String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(Calendar.getInstance().getTime());
-    private static final String actualDate = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
+    public static final String actualDate = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
     public static String strFile2Change = "metadata.xml";
 
     public static Document XmlFormatBase() throws ParserConfigurationException, SAXException, IOException {
@@ -52,7 +52,7 @@ public class FilesUtility {
                 + "		<version date=\"" + actualDate + "\">1.0</version>\n"
                 + "		<status>Publicado</status>\n"
                 //<editor-fold defaultstate="collapsed" desc="TODO:Contribuyentes que luego deberán ser leídos">
-
+                /*
                 + "		<contribute>\n"
                 + "			<role schema=\"CEM\">Productor ejecutivo</role>\n"
                 + "			<entity country=\"CO\" entityForm=\"79786415\" institution=\"eDistribution SAS\" src=\"contacto@edistribution.co\" type=\"Persona\">Díaz Ochoa, Gustavo Andrés</entity>\n"

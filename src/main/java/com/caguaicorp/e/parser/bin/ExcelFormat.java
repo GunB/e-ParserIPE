@@ -106,7 +106,7 @@ public class ExcelFormat {
 
         objAttributes.put("lang", scoSco.getStrID().substring(0, 2));
 
-        objDate.put("date", objObjeto.get(arrNames[1][1]));
+        objDate.put("date", FilesUtility.actualDate);
 
         ArrayList arrResp;
 
