@@ -342,7 +342,7 @@ public class FilesUtility {
                 + "			<date>" + actualDate + "</date>\n"
                 + "		</contribute>\n"
                 + "		<contribute>\n"
-                + "			<role schema=\"CEM\">Proveedor de Contenidos</role>\n"
+                + "			<role schema=\"CEM\">Proveedor de contenidos</role>\n"
                 + "			<entity country=\"CO\" entityForm=\"1069098612\" institution=\"eDistribution SAS\" src=\"contacto@edistribution.co\" type=\"Persona\">Suárez Gómez, Mayra Alejandra</entity>\n"
                 + "			<date>" + actualDate + "</date>\n"
                 + "		</contribute>\n"
