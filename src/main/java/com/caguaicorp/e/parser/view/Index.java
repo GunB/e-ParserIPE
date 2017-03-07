@@ -1471,7 +1471,8 @@ public class Index extends javax.swing.JFrame {
         String DriveDesc = com.caguaicorp.e.parser.utiility.FilesUtility.PathRootDesc(file.getPath());
         System.out.println(DriveDesc);
 
-        if (!DriveDesc.toLowerCase().contains("disco local")) {
+        if (!DriveDesc.toLowerCase().contains("disco local")
+                && !DriveDesc.toLowerCase().contains("local disk")) {
             javax.swing.JOptionPane.showMessageDialog(null, "El proceso debe realizarse en un disco local");
 
             return;
